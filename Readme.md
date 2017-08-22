@@ -37,6 +37,12 @@ This returns empty body with **201 (successful)**/**204 (expired transaction)**.
  
 Otherwise it returns **404 (no data)**.
 
+
+## Remarks
+1. Double is used for the “amount”. But because of the potential precision problem of double, BigDecimal could be preferred.
+2. Three JUnit test classes have been implemented. However OneMinuteStatisticsRestTest is commmented out, since it generates 1 transaction per second for 60 seconds to test the result.
+
+
 ## Main Issues (For reference only)
 
 **a) [O(1)](#a-o1)** 
@@ -74,9 +80,5 @@ Another potential race condition may occur during insertion, while we check for 
 ### c) Time Discrepancy
 Any newly arrived data can always be put to the HashMap with *O(1)* runtime, by `hashMap.out(key, value)`.
 Another potential race condition may occur during insertion, while we check for the existence of a entry with certain timestamp. For example, if two threads are trying to insert a transaction with the same timestamp, which does not exist yet in the HashMap, there is a chance that they both found that the HashMap does not contain the entry and both threads try to make a new entry. In this case, the entry of the earlier thread would be covered by the entry of the latter thread, because `hashMap.push(key, value)` would replace the older entry with the same key. This leads to inaccuracy and loss of data. In view of that, ReentrantLock is implemented in order to make sure that portion of code is thread-safe too.
-
-## Remarks
-1. Double is used for the “amount”. But because of the potential precision problem of double, BigDecimal could be preferred.
-2. Three JUnit test classes have been implemented. However OneMinuteStatisticsRestTest is commmented out, since it generates 1 transaction per second for 60 seconds to test the result.
 
 [Java documentation]: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentHashMap.html
