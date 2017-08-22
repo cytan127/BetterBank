@@ -3,7 +3,7 @@ BetterBank - Welcome!
 ##### by Chun Yin Tan
 
 # Description
-This is a RESTful API project providing two endpoints: 1) POST: /transactions and 2) GET /statistics. JSON is used for the exchange of data format. For actual usage please see the next section.
+This is a RESTful API project providing two endpoints: 1) POST: /transactions and 2) GET /statistics. JSON is used for the data exchange format. For actual usage of the API please see the next section.
 
 Basically, the goal of the project is to make the "GET /statistics" endpoint to return the statistics of the transations of the last 60 seconds, which is inserted by "POST: /transactions"
 
